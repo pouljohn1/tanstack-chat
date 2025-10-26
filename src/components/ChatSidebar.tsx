@@ -1,12 +1,34 @@
-import { Chat } from "@/types/chat";
-import { Sidebar, SidebarContent } from "./ui/sidebar";
-import { MessageSquare } from "lucide-react";
+import { Link, useRouter } from "@tanstack/react-router";
+import { MessageSquare, Plus } from "lucide-react";
+import { addChatFn } from "@/api/chat";
+import type { Chat } from "@/types/chat";
 import { Button } from "./ui/button";
+import { Sidebar, SidebarContent } from "./ui/sidebar";
 
 export default function ChatSidebar({ chats }: { chats: Chat[] }) {
+	const router = useRouter();
+
+	const submitChat = async () => {
+		await addChatFn({ data: "New Chat" });
+		router.invalidate();
+	};
+
 	return (
 		<Sidebar>
 			<SidebarContent className="flex flex-col gap-4 p-4">
+				<div className="flex flex-col gap-3">
+					<h1 className="text-xl font-bold">Chat App</h1>
+
+					<Button
+						className="w-full justify-start gap-2"
+						variant="outline"
+						type="submit"
+						onClick={submitChat}
+					>
+						<Plus className="size-4" />
+						New Chat
+					</Button>
+				</div>
 				<div className="flex flex-col gap-2">
 					<h2 className="text-sm font-semibold text-muted-foreground px-2">
 						Recent Chats
