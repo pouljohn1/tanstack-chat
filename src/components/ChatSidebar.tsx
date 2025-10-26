@@ -14,9 +14,10 @@ export default function ChatSidebar({ chats }: { chats: Chat[] }) {
 					{chats.length > 0 ? (
 						<div className="flex flex-col gap-1">
 							{chats.map((chat) => (
-								<Button
+								<Link
 									key={chat.id}
 									className="flex items-start gap-3 rounded-lg px-3 py-2.5 text-left hover:bg-accent transition-colors"
+									to={`/`}
 								>
 									<MessageSquare className="size-4 mt-0.5 shrink-0 text-muted-foreground" />
 									<div className="flex flex-col gap-0.5 min-w-0 flex-1">
@@ -27,7 +28,7 @@ export default function ChatSidebar({ chats }: { chats: Chat[] }) {
 											{chat.timestamp}
 										</span>
 									</div>
-								</Button>
+								</Link>
 							))}
 						</div>
 					) : (
