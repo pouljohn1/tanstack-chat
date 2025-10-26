@@ -1,6 +1,7 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { getChatsFn } from "@/api/chat";
 import ChatSidebar from "@/components/ChatSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import appCss from "../styles.css?url";
@@ -28,9 +29,12 @@ export const Route = createRootRoute({
 	}),
 
 	shellComponent: RootDocument,
+	loader: async () => await getChatsFn(),
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const chats = Route.useLoaderData();
+
 	return (
 		<html lang="en">
 			<head>
@@ -38,7 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<SidebarProvider>
-					<ChatSidebar />
+					<ChatSidebar chats={chats} />
 					<main className="flex-1 overflow-auto bg-white dark:bg-black">
 						{children}
 					</main>
