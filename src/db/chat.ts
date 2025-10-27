@@ -18,3 +18,8 @@ export async function createChat(title: string) {
 	await writeContent<Chat[]>("chats.json", chats);
 	return newChat;
 }
+
+export async function getChatById(chatId: number) {
+	const chats = await getChats();
+	return chats.find((chat) => chat.id === chatId);
+}
